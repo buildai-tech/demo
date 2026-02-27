@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROCKS FITNESS | Next-Gen Training — Sarjapur</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,300;0,400;0,600;0,700;0,900;1,700&family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+:root{
+  --p:#B44FFF;
+  --p2:#9B30FF;
+  --p3:#7B00FF;
+  --p4:#D490FF;
+  --cyan:#00F5FF;
+  --pink:#FF2D78;
+  --dark:#04020A;
+  --dark2:#07040F;
+  --dark3:#0C0818;
+  --dark4:#120E20;
+  --white:#FFFFFF;
+  --text:#C8B8E8;
+  --muted:#5A4A7A;
+  --glow:0 0 20px rgba(180,79,255,0.5),0 0 40px rgba(180,79,255,0.2);
+  --glow2:0 0 20px rgba(0,245,255,0.4),0 0 40px rgba(0,245,255,0.15);
+}
+
+body{
+  font-family:'Exo 2',sans-serif;
+  background:var(--dark);
+  color:var(--white);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:var(--p);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:screen;transition:transform 0.1s;}
+#fol{position:fixed;width:32px;height:32px;border:1px solid var(--p);border-radius:50%;pointer-events:none;z-index:9998;transition:all 0.12s ease;opacity:0.6;}
+#fol.active{transform:scale(2);opacity:0.3;}
+
+/* SCANLINES */
+body::after{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+  pointer-events:none;z-index:9997;
+}
+
+/* GRID BG */
+.grid-bg{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(180,79,255,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(180,79,255,0.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  animation:gridMove 20s linear infinite;
+}
+@keyframes gridMove{from{background-position:0 0;}to{background-position:60px 60px;}}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:0 60px;height:72px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(4,2,10,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(180,79,255,0.2);
+}
+nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--p),transparent);opacity:0.5;}
+
+.logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.2rem;font-weight:900;
+  letter-spacing:4px;color:var(--white);
+  text-transform:uppercase;
+  position:relative;
+}
+.logo em{color:var(--p);font-style:normal;text-shadow:var(--glow);}
+
+.nav-links{display:flex;gap:40px;list-style:none;align-items:center;}
+.nav-links a{
+  font-family:'Orbitron',sans-serif;
+  font-size:0.62rem;font-weight:500;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  transition:all 0.3s;position:relative;
+}
+.nav-links a::before{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:1px;
+  background:var(--p);
+  box-shadow:var(--glow);
+  transition:width 0.3s;
+}
+.nav-links a:hover{color:var(--p);text-shadow:var(--glow);}
+.nav-links a:hover::before{width:100%;}
+
+.nav-cta{
+  font-family:'Orbitron',sans-serif!important;
+  font-size:0.6rem!important;font-weight:700!important;
+  letter-spacing:3px!important;text-transform:uppercase;
+  color:var(--dark)!important;
+  background:var(--p)!important;
+  padding:11px 28px;
+  text-decoration:none;display:inline-block;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  box-shadow:var(--glow);
+  transition:all 0.3s!important;
+}
+.nav-cta::before{display:none!important;}
+.nav-cta:hover{background:var(--p4)!important;color:var(--dark)!important;}
+
+/* HERO */
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;
+  overflow:hidden;
+  padding:100px 60px 60px;
+}
+
+/* HERO ORBS */
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);}
+.orb1{width:600px;height:600px;background:rgba(180,79,255,0.15);top:-200px;right:-100px;animation:orbFloat 8s ease-in-out infinite;}
+.orb2{width:400px;height:400px;background:rgba(0,245,255,0.08);bottom:-100px;left:-100px;animation:orbFloat 6s ease-in-out infinite reverse;}
+.orb3{width:300px;height:300px;background:rgba(255,45,120,0.06);top:50%;left:40%;animation:orbFloat 10s ease-in-out infinite;}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-40px) scale(1.05);}}
+
+/* HERO RING */
+.hero-ring{
+  position:absolute;right:8%;top:50%;
+  transform:translateY(-50%);
+  width:500px;height:500px;
+  border:1px solid rgba(180,79,255,0.15);
+  border-radius:50%;
+  animation:ringRotate 20s linear infinite;
+}
+.hero-ring::before{
+  content:'';position:absolute;inset:30px;
+  border:1px solid rgba(0,245,255,0.1);
+  border-radius:50%;
+  animation:ringRotate 15s linear infinite reverse;
+}
+.hero-ring::after{
+  content:'';position:absolute;inset:80px;
+  border:1px solid rgba(180,79,255,0.08);
+  border-radius:50%;
+}
+.ring-dot{
+  position:absolute;width:8px;height:8px;
+  background:var(--p);border-radius:50%;
+  box-shadow:var(--glow);
+  top:50%;left:-4px;
+  transform:translateY(-50%);
+}
+@keyframes ringRotate{from{transform:translateY(-50%) rotate(0deg);}to{transform:translateY(-50%) rotate(360deg);}}
+
+.hero-content{position:relative;z-index:2;max-width:700px;}
+
+.hero-status{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid rgba(180,79,255,0.3);
+  background:rgba(180,79,255,0.06);
+  padding:8px 20px;border-radius:50px;
+  margin-bottom:36px;
+  animation:fadeUp 0.7s ease both;
+}
+.status-dot{width:7px;height:7px;background:var(--cyan);border-radius:50%;box-shadow:var(--glow2);animation:blink 1.5s ease-in-out infinite;}
+.status-text{font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.hero-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(3rem,7vw,6.5rem);
+  font-weight:900;line-height:1;
+  letter-spacing:-1px;
+  margin-bottom:24px;
+  animation:fadeUp 0.7s ease 0.1s both;
+}
+.hero-title .line1{display:block;color:var(--white);}
+.hero-title .line2{
+  display:block;
+  background:linear-gradient(135deg,var(--p),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(180,79,255,0.4));
+}
+.hero-title .line3{
+  display:block;
+  -webkit-text-stroke:1px rgba(180,79,255,0.4);
+  color:transparent;
+}
+
+.hero-desc{
+  font-size:1rem;color:var(--text);line-height:1.8;
+  max-width:480px;font-weight:300;
+  margin-bottom:48px;
+  animation:fadeUp 0.7s ease 0.2s both;
+}
+
+.hero-btns{
+  display:flex;gap:16px;flex-wrap:wrap;align-items:center;
+  animation:fadeUp 0.7s ease 0.3s both;
+}
+
+.btn-neon{
+  background:transparent;
+  color:var(--p);
+  padding:16px 40px;
+  font-family:'Orbitron',sans-serif;font-weight:700;
+  font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;
+  text-decoration:none;display:inline-block;
+  border:1px solid var(--p);
+  position:relative;overflow:hidden;
+  transition:all 0.4s;
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+}
+.btn-neon::before{
+  content:'';position:absolute;inset:0;
+  background:var(--p);
+  transform:translateX(-110%);
+  transition:transform 0.4s ease;
+}
+.btn-neon:hover::before{transform:translateX(0);}
+.btn-neon:hover{color:var(--dark);box-shadow:var(--glow);}
+.btn-neon span{position:relative;z-index:1;}
+
+.btn-ghost{
+  background:transparent;color:rgba(255,255,255,0.4);
+  padding:15px 40px;
+  font-family:'Orbitron',sans-serif;font-weight:500;
+  font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;
+  text-decoration:none;display:inline-block;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:all 0.3s;
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:var(--glow2);}
+
+.hero-stats{
+  display:flex;gap:48px;margin-top:60px;
+  animation:fadeUp 0.7s ease 0.4s both;
+  padding-top:40px;
+  border-top:1px solid rgba(180,79,255,0.1);
+}
+.hstat{text-align:center;}
+.hstat-num{
+  font-family:'Orbitron',sans-serif;
+  font-size:2.2rem;font-weight:900;
+  background:linear-gradient(135deg,var(--p),var(--p4));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;display:block;
+}
+.hstat-lbl{font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:6px;display:block;font-weight:500;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+/* TICKER */
+.ticker{
+  background:var(--dark3);
+  padding:14px 0;overflow:hidden;white-space:nowrap;
+  border-top:1px solid rgba(180,79,255,0.2);
+  border-bottom:1px solid rgba(180,79,255,0.2);
+  position:relative;z-index:1;
+}
+.ticker-track{display:inline-flex;animation:tick 25s linear infinite;}
+.ti{
+  font-family:'Orbitron',sans-serif;font-size:0.6rem;
+  letter-spacing:4px;text-transform:uppercase;
+  color:rgba(255,255,255,0.2);padding:0 36px;font-weight:500;
+}
+.ti em{color:var(--p);font-style:normal;text-shadow:var(--glow);}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ABOUT */
+.about{
+  padding:120px 60px;position:relative;z-index:1;
+  background:var(--dark2);
+}
+.about-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  max-width:1200px;margin:0 auto;
+}
+
+.about-visual{
+  position:relative;
+  aspect-ratio:1;
+  max-width:480px;
+}
+.about-hex{
+  position:relative;z-index:2;
+  width:100%;aspect-ratio:1;
+  background:linear-gradient(135deg,var(--dark3),var(--dark4));
+  clip-path:polygon(50% 0%,95% 25%,95% 75%,50% 100%,5% 75%,5% 25%);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  border:1px solid rgba(180,79,255,0.2);
+}
+.about-hex::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 40% 40%,rgba(180,79,255,0.15),transparent 60%);
+}
+.about-hex-text{
+  font-family:'Orbitron',sans-serif;
+  font-size:8rem;font-weight:900;
+  color:rgba(180,79,255,0.08);
+  position:relative;z-index:1;
+  letter-spacing:-5px;
+}
+.about-corner{
+  position:absolute;
+  bottom:-20px;right:-20px;
+  background:var(--p);
+  padding:24px 28px;
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+  box-shadow:var(--glow);
+  z-index:3;
+}
+.ac-num{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;color:var(--dark);line-height:1;display:block;}
+.ac-txt{font-family:'Exo 2',sans-serif;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,0.6);display:block;margin-top:4px;}
+
+/* Orbit rings around about visual */
+.orbit{
+  position:absolute;border:1px dashed rgba(180,79,255,0.1);
+  border-radius:50%;pointer-events:none;
+}
+.orbit1{inset:-30px;animation:spin 15s linear infinite;}
+.orbit2{inset:-60px;animation:spin 25s linear infinite reverse;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.orbit-dot{
+  position:absolute;width:8px;height:8px;
+  background:var(--cyan);border-radius:50%;
+  box-shadow:var(--glow2);
+  top:0;left:50%;transform:translateX(-50%) translateY(-4px);
+}
+
+.sec-label{
+  font-family:'Orbitron',sans-serif;font-size:0.6rem;
+  letter-spacing:5px;text-transform:uppercase;
+  color:var(--p);margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+  text-shadow:var(--glow);
+}
+.sec-label::before{content:'//';color:var(--cyan);margin-right:4px;}
+
+.sec-h{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.8rem,3vw,2.8rem);
+  font-weight:900;line-height:1.1;
+  margin-bottom:24px;
+  letter-spacing:-0.5px;
+}
+.sec-h em{
+  background:linear-gradient(135deg,var(--p),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-style:normal;
+}
+
+.sec-p{font-size:0.95rem;color:var(--text);line-height:1.9;font-weight:300;margin-bottom:40px;}
+
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.feat-li{
+  list-style:none;
+  font-family:'Exo 2',sans-serif;font-size:0.8rem;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);
+  display:flex;align-items:center;gap:10px;
+  font-weight:500;transition:color 0.3s;
+}
+.feat-li:hover{color:var(--p);text-shadow:var(--glow);}
+.feat-li::before{content:'▹';color:var(--p);font-size:0.7rem;}
+
+/* SERVICES */
+.services{padding:120px 60px;position:relative;z-index:1;}
+
+.sec-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  max-width:1200px;margin:0 auto 70px;
+}
+
+.svc-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:rgba(180,79,255,0.1);
+  max-width:1200px;margin:0 auto;
+}
+
+.svc-card{
+  background:var(--dark2);padding:50px 40px;
+  position:relative;overflow:hidden;
+  transition:all 0.4s;
+  cursor:pointer;
+}
+.svc-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(180,79,255,0.08),transparent);
+  opacity:0;transition:opacity 0.4s;
+}
+.svc-card::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--p),var(--cyan));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s;
+  box-shadow:var(--glow);
+}
+.svc-card:hover::before{opacity:1;}
+.svc-card:hover::after{transform:scaleX(1);}
+.svc-card:hover{background:var(--dark3);}
+
+.svc-num-bg{
+  position:absolute;top:20px;right:24px;
+  font-family:'Orbitron',sans-serif;font-size:5rem;font-weight:900;
+  color:rgba(180,79,255,0.04);line-height:1;
+  transition:color 0.4s;
+}
+.svc-card:hover .svc-num-bg{color:rgba(180,79,255,0.1);}
+
+.svc-icon-wrap{
+  width:54px;height:54px;
+  background:rgba(180,79,255,0.1);
+  border:1px solid rgba(180,79,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:28px;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  transition:all 0.4s;
+}
+.svc-card:hover .svc-icon-wrap{background:rgba(180,79,255,0.2);border-color:var(--p);box-shadow:var(--glow);}
+
+.svc-title{
+  font-family:'Orbitron',sans-serif;font-size:0.9rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--white);margin-bottom:14px;
+  transition:color 0.3s;
+}
+.svc-card:hover .svc-title{color:var(--p);text-shadow:var(--glow);}
+.svc-desc{font-size:0.88rem;color:var(--muted);line-height:1.8;font-weight:300;}
+
+.svc-line{
+  margin-top:28px;height:1px;width:36px;
+  background:linear-gradient(90deg,var(--p),var(--cyan));
+  box-shadow:var(--glow);
+  transition:width 0.4s;
+}
+.svc-card:hover .svc-line{width:80px;}
+
+/* PRICING */
+.pricing{
+  padding:120px 60px;
+  background:var(--dark2);
+  position:relative;z-index:1;
+}
+
+.plan-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:rgba(180,79,255,0.1);
+  max-width:1200px;margin:70px auto 0;
+}
+
+.plan{
+  background:var(--dark3);padding:52px 44px;
+  position:relative;overflow:hidden;
+  transition:transform 0.4s;
+}
+.plan::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--p),transparent);
+  opacity:0;transition:opacity 0.4s;
+}
+.plan:hover::before{opacity:1;}
+.plan:not(.featured):hover{transform:translateY(-6px);}
+
+.plan.featured{
+  background:var(--dark4);
+  transform:translateY(-16px);
+  border:1px solid rgba(180,79,255,0.3);
+  box-shadow:0 0 40px rgba(180,79,255,0.15),inset 0 0 40px rgba(180,79,255,0.05);
+}
+.plan.featured::before{opacity:1;}
+.plan.featured:hover{transform:translateY(-22px);}
+
+.plan-glow-orb{
+  position:absolute;top:-60px;right:-60px;
+  width:180px;height:180px;
+  background:radial-gradient(circle,rgba(180,79,255,0.15),transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+
+.plan-badge{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--p),var(--cyan));
+  color:var(--dark);
+  font-family:'Orbitron',sans-serif;font-size:0.55rem;
+  letter-spacing:3px;text-transform:uppercase;font-weight:700;
+  padding:5px 16px;margin-bottom:24px;
+  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+
+.plan-tier{
+  font-family:'Orbitron',sans-serif;font-size:0.58rem;
+  letter-spacing:4px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px;
+}
+.plan-name{
+  font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:900;
+  color:var(--white);margin-bottom:32px;letter-spacing:2px;
+}
+.plan.featured .plan-name{
+  background:linear-gradient(135deg,var(--p),var(--p4));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.plan-price{
+  font-family:'Orbitron',sans-serif;font-size:3.8rem;font-weight:900;
+  color:var(--white);line-height:1;margin-bottom:4px;
+}
+.plan.featured .plan-price{color:var(--p);text-shadow:var(--glow);}
+.plan-price sup{font-size:1.4rem;vertical-align:top;margin-top:10px;display:inline-block;}
+.plan-mo{font-size:0.7rem;letter-spacing:2px;color:var(--muted);margin-bottom:36px;text-transform:uppercase;}
+
+.plan-sep{
+  height:1px;background:linear-gradient(90deg,var(--p),transparent);
+  margin-bottom:28px;opacity:0.3;
+}
+
+.plan-feats{list-style:none;margin-bottom:40px;}
+.plan-feats li{
+  padding:11px 0;
+  border-bottom:1px solid rgba(180,79,255,0.06);
+  font-size:0.85rem;color:var(--muted);
+  display:flex;align-items:center;gap:10px;
+  font-weight:300;
+  transition:color 0.3s;
+}
+.plan-feats li:hover{color:var(--white);}
+.plan-feats li::before{content:'▹';color:var(--p);font-size:0.7rem;flex-shrink:0;}
+
+.pbtn{
+  display:block;text-align:center;text-decoration:none;
+  padding:15px;
+  font-family:'Orbitron',sans-serif;font-weight:700;
+  font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;
+  border:none;cursor:pointer;transition:all 0.3s;width:100%;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.pbtn-outline{background:transparent;color:var(--p);border:1px solid rgba(180,79,255,0.4);}
+.pbtn-outline:hover{background:rgba(180,79,255,0.1);border-color:var(--p);box-shadow:var(--glow);}
+.pbtn-neon{
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  color:var(--white);
+  box-shadow:var(--glow);
+}
+.pbtn-neon:hover{background:linear-gradient(135deg,var(--p4),var(--p));box-shadow:0 0 30px rgba(180,79,255,0.6);}
+
+/* REVIEWS */
+.reviews{padding:120px 60px;position:relative;z-index:1;}
+
+.rev-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:rgba(180,79,255,0.1);
+  max-width:1200px;margin:70px auto 0;
+}
+
+.rev-card{
+  background:var(--dark2);padding:44px 36px;
+  position:relative;overflow:hidden;
+  transition:all 0.4s;
+}
+.rev-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(180,79,255,0.06),transparent);
+  opacity:0;transition:opacity 0.4s;
+}
+.rev-card:hover::after{opacity:1;}
+.rev-card:hover{background:var(--dark3);}
+
+.rev-q{
+  font-family:'Orbitron',sans-serif;font-size:5rem;font-weight:900;
+  color:rgba(180,79,255,0.08);position:absolute;
+  top:16px;right:24px;line-height:1;
+}
+.rev-stars{
+  color:var(--p);font-size:0.9rem;letter-spacing:3px;
+  margin-bottom:20px;text-shadow:var(--glow);
+}
+.rev-text{
+  font-size:0.92rem;color:var(--text);line-height:1.8;
+  margin-bottom:28px;font-weight:300;font-style:italic;
+}
+.rev-author{
+  display:flex;align-items:center;gap:14px;
+  border-top:1px solid rgba(180,79,255,0.1);
+  padding-top:20px;
+}
+.rev-av{
+  width:44px;height:44px;
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;
+  color:var(--white);flex-shrink:0;
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  box-shadow:var(--glow);
+}
+.rev-name{
+  font-family:'Orbitron',sans-serif;font-weight:700;
+  font-size:0.72rem;letter-spacing:1.5px;
+  color:var(--white);text-transform:uppercase;
+}
+.rev-since{font-size:0.72rem;color:var(--muted);margin-top:3px;}
+
+/* CONTACT */
+.contact{
+  padding:120px 60px;
+  background:var(--dark2);
+  position:relative;z-index:1;
+}
+
+.ct-grid{
+  display:grid;grid-template-columns:1fr 1.1fr;gap:100px;
+  max-width:1200px;margin:0 auto;align-items:start;
+}
+
+.ct-items{margin-top:50px;display:flex;flex-direction:column;gap:32px;}
+.ci{display:flex;gap:20px;align-items:flex-start;padding-bottom:28px;border-bottom:1px solid rgba(180,79,255,0.08);}
+.ci:last-child{border-bottom:none;}
+.ci-ico{
+  width:48px;height:48px;
+  background:rgba(180,79,255,0.1);
+  border:1px solid rgba(180,79,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  transition:all 0.3s;
+}
+.ci:hover .ci-ico{background:rgba(180,79,255,0.2);box-shadow:var(--glow);}
+.ci-lbl{
+  font-family:'Orbitron',sans-serif;font-size:0.55rem;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--p);margin-bottom:6px;
+}
+.ci-val{color:var(--muted);font-size:0.9rem;line-height:1.6;font-weight:300;}
+
+.ct-form{
+  background:var(--dark3);padding:56px 48px;
+  border:1px solid rgba(180,79,255,0.15);
+  position:relative;overflow:hidden;
+}
+.ct-form::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--p),var(--cyan),var(--p));
+  box-shadow:var(--glow);
+}
+.ct-form-glow{
+  position:absolute;top:-100px;right:-100px;
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(180,79,255,0.08),transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+
+.form-title{
+  font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;
+  color:var(--white);margin-bottom:6px;letter-spacing:2px;
+}
+.form-sub{
+  font-size:0.8rem;color:var(--muted);margin-bottom:40px;
+  font-family:'Share Tech Mono',monospace;
+  letter-spacing:1px;
+}
+.form-sub span{color:var(--p);}
+
+.fg{margin-bottom:22px;}
+.fg label{
+  display:block;font-family:'Orbitron',sans-serif;
+  font-size:0.55rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px;
+}
+.fg input,.fg select,.fg textarea{
+  width:100%;background:rgba(180,79,255,0.04);
+  border:1px solid rgba(180,79,255,0.15);
+  color:var(--white);padding:13px 16px;
+  font-family:'Exo 2',sans-serif;font-size:0.9rem;font-weight:300;
+  outline:none;transition:all 0.3s;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{
+  border-color:var(--p);
+  background:rgba(180,79,255,0.08);
+  box-shadow:0 0 20px rgba(180,79,255,0.1);
+}
+.fg select option{background:var(--dark3);}
+.fg textarea{resize:none;height:90px;}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+.btn-submit{
+  width:100%;padding:18px;margin-top:8px;
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  color:var(--white);
+  font-family:'Orbitron',sans-serif;font-weight:700;
+  font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;
+  border:none;cursor:pointer;
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+  transition:all 0.3s;
+  position:relative;overflow:hidden;
+  box-shadow:var(--glow);
+}
+.btn-submit::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--p4),var(--cyan));
+  opacity:0;transition:opacity 0.4s;
+}
+.btn-submit:hover::before{opacity:1;}
+.btn-submit:hover{box-shadow:0 0 40px rgba(180,79,255,0.5);}
+.btn-submit span{position:relative;z-index:1;}
+
+/* FOOTER */
+footer{
+  background:var(--dark);padding:44px 60px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid rgba(180,79,255,0.15);
+  position:relative;z-index:1;
+}
+footer::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--p),transparent);
+  opacity:0.4;
+}
+.ft-logo{
+  font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:900;
+  letter-spacing:4px;color:var(--white);
+}
+.ft-logo em{color:var(--p);font-style:normal;text-shadow:var(--glow);}
+.ft-copy{
+  font-family:'Share Tech Mono',monospace;
+  color:var(--muted);font-size:0.75rem;
+}
+.ft-links{display:flex;gap:28px;}
+.ft-links a{
+  color:var(--muted);text-decoration:none;
+  font-family:'Orbitron',sans-serif;font-size:0.58rem;
+  letter-spacing:2px;text-transform:uppercase;
+  transition:all 0.3s;
+}
+.ft-links a:hover{color:var(--p);text-shadow:var(--glow);}
+
+/* WA */
+.wa{
+  position:fixed;bottom:28px;right:28px;z-index:999;
+  width:56px;height:56px;background:#25D366;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;text-decoration:none;
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+  transition:all 0.3s;
+  box-shadow:0 0 20px rgba(37,211,102,0.3);
+  animation:waEntry 1s ease 2s both;
+}
+.wa:hover{transform:translateY(-4px);box-shadow:0 0 40px rgba(37,211,102,0.4);}
+@keyframes waEntry{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(40px);transition:opacity 0.9s ease,transform 0.9s ease;}
+.rv.fl{transform:translateX(-40px);}
+.rv.fr{transform:translateX(40px);}
+.rv.in{opacity:1;transform:translateY(0) translateX(0);}
+
+/* SECTION WRAPPER */
+.sec-wrap{max-width:1200px;margin:0 auto;}
+
+/* HAMBURGER */
+.hamburger{
+  display:none;flex-direction:column;gap:5px;cursor:pointer;
+  padding:8px;z-index:1100;
+}
+.hamburger span{
+  display:block;width:26px;height:2px;
+  background:var(--p);border-radius:2px;
+  transition:all 0.3s;box-shadow:var(--glow);
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* MOBILE MENU */
+.mobile-menu{
+  display:none;
+  position:fixed;top:72px;left:0;right:0;bottom:0;
+  background:rgba(4,2,10,0.98);
+  backdrop-filter:blur(20px);
+  z-index:1050;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:36px;
+  border-top:1px solid rgba(180,79,255,0.2);
+}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.1rem;font-weight:700;
+  letter-spacing:4px;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  transition:all 0.3s;
+  padding:12px 0;
+  border-bottom:1px solid rgba(180,79,255,0.1);
+  width:80%;text-align:center;
+}
+.mobile-menu a:hover{color:var(--p);text-shadow:var(--glow);}
+.mobile-menu .mob-cta{
+  background:var(--p);color:var(--dark)!important;
+  padding:16px 48px!important;
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+  box-shadow:var(--glow);border:none!important;
+  margin-top:8px;
+}
+
+@media(max-width:900px){
+  body{cursor:auto;}
+  #cur,#fol{display:none;}
+
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+
+  /* HERO */
+  .hero{padding:90px 20px 50px;min-height:auto;}
+  .hero-ring{display:none;}
+  .orb1{width:300px;height:300px;top:-100px;right:-80px;}
+  .orb2{width:200px;height:200px;}
+  .orb3{display:none;}
+
+  .hero-status{padding:6px 14px;}
+  .status-text{font-size:0.5rem;letter-spacing:2px;}
+
+  .hero-title{font-size:clamp(2.8rem,13vw,4.5rem);letter-spacing:-1px;margin-bottom:18px;}
+  .hero-desc{font-size:0.88rem;margin-bottom:36px;}
+
+  .hero-btns{flex-direction:column;align-items:flex-start;gap:12px;}
+  .btn-neon,.btn-ghost{width:100%;text-align:center;padding:16px 24px;}
+
+  .hero-stats{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:0;margin-top:40px;padding-top:30px;
+    border:1px solid rgba(180,79,255,0.1);
+  }
+  .hstat{
+    padding:20px 16px;text-align:center;
+    border-right:1px solid rgba(180,79,255,0.1);
+    border-bottom:1px solid rgba(180,79,255,0.1);
+  }
+  .hstat:nth-child(2n){border-right:none;}
+  .hstat:nth-child(3),.hstat:nth-child(4){border-bottom:none;}
+  .hstat-num{font-size:1.8rem;}
+  .hstat-lbl{font-size:0.55rem;letter-spacing:2px;}
+
+  /* TICKER */
+  .ti{font-size:0.55rem;padding:0 20px;}
+
+  /* ABOUT */
+  .about{padding:60px 20px;}
+  .about-inner{grid-template-columns:1fr;gap:40px;}
+  .about-visual{max-width:280px;margin:0 auto;}
+  .about-hex-text{font-size:5rem;}
+  .about-corner{bottom:-10px;right:-10px;padding:16px 20px;}
+  .ac-num{font-size:1.5rem;}
+  .orbit1{inset:-15px;}
+  .orbit2{inset:-30px;}
+
+  .sec-h{font-size:clamp(1.6rem,6vw,2.2rem);}
+  .feat-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .feat-li{font-size:0.72rem;}
+
+  /* SERVICES */
+  .services{padding:60px 20px;}
+  .sec-header{flex-direction:column;gap:20px;align-items:flex-start;}
+  .sec-header .btn-neon{width:100%;text-align:center;}
+  .svc-grid{grid-template-columns:1fr;gap:1px;}
+  .svc-card{padding:36px 28px;}
+  .svc-num-bg{font-size:3.5rem;}
+
+  /* PRICING */
+  .pricing{padding:60px 20px;}
+  .plan-grid{grid-template-columns:1fr;gap:1px;}
+  .plan{padding:40px 28px;}
+  .plan.featured{transform:none;border-left:2px solid var(--p);}
+  .plan-price{font-size:3rem;}
+  .plan-name{font-size:1.5rem;}
+
+  /* REVIEWS */
+  .reviews{padding:60px 20px;}
+  .rev-grid{grid-template-columns:1fr;gap:1px;}
+  .rev-card{padding:36px 28px;}
+
+  /* CONTACT */
+  .contact{padding:60px 20px;}
+  .ct-grid{grid-template-columns:1fr;gap:40px;}
+  .ct-form{padding:32px 22px;}
+  .ct-form::before{height:2px;}
+  .fg-row{grid-template-columns:1fr;}
+  .form-title{font-size:1.2rem;}
+  .ci-val{font-size:0.82rem;}
+
+  /* FOOTER */
+  footer{
+    flex-direction:column;gap:16px;
+    text-align:center;padding:28px 20px;
+  }
+  .ft-links{gap:16px;flex-wrap:wrap;justify-content:center;}
+  .ft-copy{font-size:0.65rem;}
+
+  /* SECTIONS MAX WIDTH */
+  .sec-wrap{padding:0;}
+}
+
+@media(max-width:480px){
+  .hero-title{font-size:clamp(2.4rem,11vw,3.5rem);}
+  .hero-status{display:none;}
+  nav{height:62px;}
+  .mobile-menu{top:62px;}
+  .logo{font-size:1rem;letter-spacing:2px;}
+  .sec-h{font-size:1.5rem;}
+  .svc-card{padding:28px 20px;}
+  .plan{padding:32px 20px;}
+  .rev-card{padding:28px 20px;}
+  .ct-form{padding:28px 18px;}
+  footer{padding:22px 16px;}
+}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div id="cur"></div>
+<div id="fol"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">ROCKS <em>FITNESS</em></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Training</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Join Now</a></li>
+  </ul>
+  <div class="hamburger" id="ham">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mob-link">About</a>
+  <a href="#services" class="mob-link">Training</a>
+  <a href="#pricing" class="mob-link">Pricing</a>
+  <a href="#reviews" class="mob-link">Reviews</a>
+  <a href="#contact" class="mob-link mob-cta">Join Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-ring"><div class="ring-dot"></div></div>
+
+  <div class="hero-content">
+    <div class="hero-status">
+      <div class="status-dot"></div>
+      <span class="status-text">Now Accepting New Members — Sarjapur, Bangalore</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="line1">NEXT-GEN</span>
+      <span class="line2">TRAINING</span>
+      <span class="line3">FACILITY</span>
+    </h1>
+    <p class="hero-desc">Sarjapur's most advanced fitness experience. Cutting-edge equipment, elite coaching, and a community engineered for peak human performance.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-neon"><span>Start Free Trial</span></a>
+      <a href="#pricing" class="btn-ghost">View Plans</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat">
+        <span class="hstat-num" data-val="850" data-suf="+">850+</span>
+        <span class="hstat-lbl">Reviews</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-num" data-val="4.8" data-suf="★" data-dec="1">4.8★</span>
+        <span class="hstat-lbl">Rating</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-num" data-val="10" data-suf="K+">10K+</span>
+        <span class="hstat-lbl">Members</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-num" data-val="5" data-suf="+">5+</span>
+        <span class="hstat-lbl">Years</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ti">Strength Training <em>◆</em></span><span class="ti">Personal Coaching <em>◆</em></span><span class="ti">Cardio Zone <em>◆</em></span><span class="ti">Combat Fitness <em>◆</em></span><span class="ti">Yoga & Recovery <em>◆</em></span><span class="ti">Nutrition Coaching <em>◆</em></span><span class="ti">4.8★ Google Rating <em>◆</em></span><span class="ti">Sarjapur's No.1 Gym <em>◆</em></span>
+    <span class="ti">Strength Training <em>◆</em></span><span class="ti">Personal Coaching <em>◆</em></span><span class="ti">Cardio Zone <em>◆</em></span><span class="ti">Combat Fitness <em>◆</em></span><span class="ti">Yoga & Recovery <em>◆</em></span><span class="ti">Nutrition Coaching <em>◆</em></span><span class="ti">4.8★ Google Rating <em>◆</em></span><span class="ti">Sarjapur's No.1 Gym <em>◆</em></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual rv fl">
+      <div class="orbit orbit1"><div class="orbit-dot"></div></div>
+      <div class="orbit orbit2"></div>
+      <div class="about-hex">
+        <div class="about-hex-text">RF</div>
+      </div>
+      <div class="about-corner">
+        <span class="ac-num">No.1</span>
+        <span class="ac-txt">Sarjapur Gym</span>
+      </div>
+    </div>
+    <div class="rv">
+      <div class="sec-label">// About Us</div>
+      <h2 class="sec-h">Where <em>Champions</em><br>Are Engineered</h2>
+      <p class="sec-p">Rocks Fitness has been Sarjapur's most advanced premium gym since 2019. We merge state-of-the-art technology with elite coaching to push every member beyond their limits — and into their best selves.</p>
+      <ul class="feat-grid">
+        <li class="feat-li">Premium Equipment</li>
+        <li class="feat-li">Expert Trainers</li>
+        <li class="feat-li">Personal Coaching</li>
+        <li class="feat-li">Nutrition Guidance</li>
+        <li class="feat-li">Group Classes</li>
+        <li class="feat-li">Locker Rooms</li>
+        <li class="feat-li">AC Facility</li>
+        <li class="feat-li">Free Parking</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="sec-header rv">
+    <div>
+      <div class="sec-label">// Training Programs</div>
+      <h2 class="sec-h" style="margin-bottom:0;">Elite <em>Programs</em><br>Built to Win</h2>
+    </div>
+    <a href="#contact" class="btn-neon"><span>Book Free Trial</span></a>
+  </div>
+  <div class="svc-grid rv">
+    <div class="svc-card"><div class="svc-num-bg">01</div><div class="svc-icon-wrap">🏋️</div><div class="svc-title">Strength Training</div><p class="svc-desc">Next-gen free weights and machines. Build raw power and muscle mass with expert supervision.</p><div class="svc-line"></div></div>
+    <div class="svc-card"><div class="svc-num-bg">02</div><div class="svc-icon-wrap">🥊</div><div class="svc-title">Combat Fitness</div><p class="svc-desc">Boxing, MMA, and kickboxing classes. Shred fat and build elite cardiovascular conditioning.</p><div class="svc-line"></div></div>
+    <div class="svc-card"><div class="svc-num-bg">03</div><div class="svc-icon-wrap">🏃</div><div class="svc-title">Cardio Zone</div><p class="svc-desc">Premium treadmills, cycles, and rowing machines engineered for maximum cardio performance.</p><div class="svc-line"></div></div>
+    <div class="svc-card"><div class="svc-num-bg">04</div><div class="svc-icon-wrap">👤</div><div class="svc-title">Personal Training</div><p class="svc-desc">1-on-1 sessions with certified trainers building hyper-personalized programs for your goals.</p><div class="svc-line"></div></div>
+    <div class="svc-card"><div class="svc-num-bg">05</div><div class="svc-icon-wrap">🧘</div><div class="svc-title">Yoga & Recovery</div><p class="svc-desc">Dedicated studio for flexibility, active recovery and mindfulness with elite instructors.</p><div class="svc-line"></div></div>
+    <div class="svc-card"><div class="svc-num-bg">06</div><div class="svc-icon-wrap">🥗</div><div class="svc-title">Nutrition Coaching</div><p class="svc-desc">Expert nutritionists crafting precision meal plans engineered to supercharge your results.</p><div class="svc-line"></div></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="sec-wrap">
+    <div class="rv" style="text-align:center;">
+      <div class="sec-label" style="justify-content:center;">// Membership Plans</div>
+      <h2 class="sec-h" style="margin-bottom:0;">Select Your <em>Protocol</em></h2>
+    </div>
+    <div class="plan-grid rv">
+      <div class="plan">
+        <div class="plan-tier">Initiate</div>
+        <div class="plan-name">BASIC</div>
+        <div class="plan-price"><sup>₹</sup>999</div>
+        <div class="plan-mo">/ per month</div>
+        <div class="plan-sep"></div>
+        <ul class="plan-feats">
+          <li>Full Gym Floor Access</li>
+          <li>Cardio Zone</li>
+          <li>Locker Room</li>
+          <li>2 Guest Passes</li>
+        </ul>
+        <a href="#contact" class="pbtn pbtn-outline">Initiate →</a>
+      </div>
+      <div class="plan featured">
+        <div class="plan-glow-orb"></div>
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-tier">Operator</div>
+        <div class="plan-name">PRO</div>
+        <div class="plan-price"><sup>₹</sup>1,799</div>
+        <div class="plan-mo">/ per month</div>
+        <div class="plan-sep"></div>
+        <ul class="plan-feats">
+          <li>Everything in Basic</li>
+          <li>All Group Classes</li>
+          <li>2 PT Sessions / month</li>
+          <li>Nutrition Consultation</li>
+          <li>Custom Diet Plan</li>
+        </ul>
+        <a href="#contact" class="pbtn pbtn-neon">Activate →</a>
+      </div>
+      <div class="plan">
+        <div class="plan-tier">Apex</div>
+        <div class="plan-name">ELITE</div>
+        <div class="plan-price"><sup>₹</sup>2,999</div>
+        <div class="plan-mo">/ per month</div>
+        <div class="plan-sep"></div>
+        <ul class="plan-feats">
+          <li>Everything in Pro</li>
+          <li>Unlimited PT Sessions</li>
+          <li>Priority Booking</li>
+          <li>Body Composition Test</li>
+          <li>Custom Meal Plan</li>
+        </ul>
+        <a href="#contact" class="pbtn pbtn-outline">Elevate →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="sec-wrap">
+    <div class="rv">
+      <div class="sec-label">// Testimonials</div>
+      <h2 class="sec-h">Mission <em>Accomplished</em></h2>
+    </div>
+    <div class="rev-grid rv">
+      <div class="rev-card"><div class="rev-q">"</div><div class="rev-stars">★★★★★</div><p class="rev-text">"Best gym in Sarjapur without a doubt. Equipment is top-notch, trainers are elite. More results in 3 months than 2 years anywhere else."</p><div class="rev-author"><div class="rev-av">R</div><div><div class="rev-name">Rahul Sharma</div><div class="rev-since">Member since 2022</div></div></div></div>
+      <div class="rev-card"><div class="rev-q">"</div><div class="rev-stars">★★★★★</div><p class="rev-text">"Every workout feels like a powerup. Love the vibe and the trainers. Completely transformed in 6 months. This community keeps me coming back."</p><div class="rev-author"><div class="rev-av">P</div><div><div class="rev-name">Priya Menon</div><div class="rev-since">Member since 2023</div></div></div></div>
+      <div class="rev-card"><div class="rev-q">"</div><div class="rev-stars">★★★★★</div><p class="rev-text">"New equipment, clean environment, motivating atmosphere. Highly recommend to both beginners and advanced athletes. This place is next level."</p><div class="rev-author"><div class="rev-av">A</div><div><div class="rev-name">Arun Kumar</div><div class="rev-since">Member since 2021</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="ct-grid">
+    <div class="rv">
+      <div class="sec-label">// Contact</div>
+      <h2 class="sec-h">Initialize <em>Your</em><br>Journey</h2>
+      <div class="ct-items">
+        <div class="ci"><div class="ci-ico">📍</div><div><div class="ci-lbl">Location</div><div class="ci-val">Kodathi Gate, #114, Shree Yellamma Devi Complex, Sarjapur - Marathahalli Rd, Bangalore</div></div></div>
+        <div class="ci"><div class="ci-ico">⏰</div><div><div class="ci-lbl">Operating Hours</div><div class="ci-val">Mon–Sat: 05:00 – 22:00<br>Sunday: 06:00 – 20:00</div></div></div>
+        <div class="ci"><div class="ci-ico">📞</div><div><div class="ci-lbl">Call / WhatsApp</div><div class="ci-val">+91 96776 67555</div></div></div>
+      </div>
+    </div>
+    <div class="rv fr">
+      <div class="ct-form">
+        <div class="ct-form-glow"></div>
+        <div class="form-title">FREE TRIAL</div>
+        <div class="form-sub">Status: <span>SLOTS AVAILABLE</span> — Book now</div>
+        <div class="fg-row">
+          <div class="fg"><label>Full Name</label><input type="text" placeholder="Your name"></div>
+          <div class="fg"><label>Phone</label><input type="tel" placeholder="+91 00000 00000"></div>
+        </div>
+        <div class="fg"><label>Select Protocol</label>
+          <select>
+            <option value="" disabled selected>Choose membership</option>
+            <option>Basic — ₹999/month</option>
+            <option>Pro — ₹1,799/month</option>
+            <option>Elite — ₹2,999/month</option>
+            <option>Just exploring</option>
+          </select>
+        </div>
+        <div class="fg"><label>Primary Objective</label><textarea placeholder="E.g. Build muscle, lose weight, get fit..."></textarea></div>
+        <button class="btn-submit" onclick="alert('⚡ Mission accepted! Our team will contact you within 24 hours. Welcome to Rocks Fitness!')"><span>DEPLOY FREE TRIAL →</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-logo">ROCKS <em>FITNESS</em></div>
+  <div class="ft-copy">© 2025 ROCKS FITNESS // SARJAPUR, BANGALORE</div>
+  <div class="ft-links">
+    <a href="#about">About</a>
+    <a href="#services">Training</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<a href="https://wa.me/919677667555" class="wa" target="_blank">💬</a>
+
+<script>
+// Custom cursor
+const cur=document.getElementById('cur'),fol=document.getElementById('fol');
+let mx=0,my=0,fx=0,fy=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.cssText=`left:${mx-4}px;top:${my-4}px`;
+});
+setInterval(()=>{
+  fx+=(mx-fx)*0.14;fy+=(my-fy)*0.14;
+  fol.style.cssText=`left:${fx-16}px;top:${fy-16}px`;
+},16);
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>fol.classList.add('active'));
+  el.addEventListener('mouseleave',()=>fol.classList.remove('active'));
+});
+
+// Scroll reveal
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:0.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// Counters
+const cobs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){
+    const el=e.target,val=parseFloat(el.dataset.val),suf=el.dataset.suf||'',dec=parseInt(el.dataset.dec||0);
+    let s=0;const dur=2000;
+    const step=ts=>{
+      if(!s)s=ts;
+      const p=Math.min((ts-s)/dur,1),ease=1-Math.pow(1-p,3);
+      const v=ease*val;
+      el.textContent=(dec?v.toFixed(dec):Math.floor(v))+suf;
+      if(p<1)requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+    cobs.unobserve(el);
+  }
+}),{threshold:0.5});
+document.querySelectorAll('[data-val]').forEach(c=>cobs.observe(c));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();
+  const t=document.querySelector(a.getAttribute('href'));
+  if(t)t.scrollIntoView({behavior:'smooth'});
+}));
+
+// Hamburger menu
+const ham=document.getElementById('ham');
+const mobileMenu=document.getElementById('mobileMenu');
+ham.addEventListener('click',()=>{
+  ham.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';
+});
+document.querySelectorAll('.mob-link').forEach(a=>{
+  a.addEventListener('click',()=>{
+    ham.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow='';
+  });
+});
+
+// Glitch effect on logo on hover
+const logo=document.querySelector('.logo');
+logo.addEventListener('mouseenter',()=>{
+  logo.style.animation='glitch 0.3s ease';
+  setTimeout(()=>logo.style.animation='',300);
+});
+</script>
+</body>
+</html>

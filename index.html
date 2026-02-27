@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rocks Fitness - Demo Selector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 40px;
+            color: #ccc;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .demo-btn {
+            padding: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s ease;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+        }
+
+        .demo-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 20px rgba(255, 75, 43, 0.6);
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>💪 Rocks Fitness</h1>
+        <p>Select a Demo Theme to Preview</p>
+
+        <div class="buttons">
+            <a href="demo1/index.html" class="demo-btn">Demo 1</a>
+            <a href="demo2/index.html" class="demo-btn">Demo 2</a>
+            <a href="demo3/index.html" class="demo-btn">Demo 3</a>
+            <a href="demo4/index.html" class="demo-btn">Demo 4</a>
+            <a href="demo5/index.html" class="demo-btn">Demo 5</a>
+            <a href="demo6/index.html" class="demo-btn">Demo 6</a>
+        </div>
+
+        <footer>
+            © 2026 Rocks Fitness | Designed for Client Demo
+        </footer>
+    </div>
+
+</body>
+</html>
